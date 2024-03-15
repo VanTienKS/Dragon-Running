@@ -1,0 +1,3 @@
+WIDTH = 1044
+HEIGHT = 260
+FPS = 60

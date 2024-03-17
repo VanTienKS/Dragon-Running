@@ -10,12 +10,13 @@ class Dino:
         self.frame = 0
         self.img_duration = img_duration
         self.velocity = [0, 0]
+        self.collition_down = False
     
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
     def update(self, obstacles):
-        
+        self.collition_down = False
         dino_rect = self.rect()
         for cactus in obstacles:
             if dino_rect.colliderect(cactus.rect()):
@@ -25,11 +26,16 @@ class Dino:
         if self.frame >= len(self.game.assets['dino']) * self.img_duration:
             self.frame = 0
 
-        self.velocity[1] = min(8, self.velocity[1]+0.4)
+        self.velocity[1] = min(10, self.velocity[1]+0.4)
         self.pos[1] += self.velocity[1]
         if self.pos[1] > (HEIGHT - HEIGHT / 3 + 20):
             self.pos[1] = (HEIGHT - HEIGHT / 3 + 20)
             self.velocity[1] = 0
+            self.collition_down = True
+            
+    def jump(self):
+        if self.collition_down:
+            self.velocity[1] = -13
 
     def render(self, screen):
         screen.blit(self.game.assets['dino']

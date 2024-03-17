@@ -15,10 +15,10 @@ class Dino:
         if self.frame >= len(self.game.assets['dino']) * self.img_duration:
             self.frame = 0
 
-        self.velocity[1] = min(5, self.velocity[1]+0.2)
+        self.velocity[1] = min(8, self.velocity[1]+0.4)
         self.pos[1] += self.velocity[1]
-        if self.pos[1] > (HEIGHT - HEIGHT / 3 - 4):
-            self.pos[1] = (HEIGHT - HEIGHT / 3 - 4)
+        if self.pos[1] > (HEIGHT - HEIGHT / 3 + 20):
+            self.pos[1] = (HEIGHT - HEIGHT / 3 + 20)
             self.velocity[1] = 0
 
     def render(self, screen):

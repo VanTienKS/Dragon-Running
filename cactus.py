@@ -11,6 +11,9 @@ class Cactus:
 
     def update(self):
         self.pos[0] -= self.speed
+        
+    def rect(self):
+        return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
     
     def render(self, screen):
         screen.blit(pygame.transform.scale(

@@ -1,3 +1,4 @@
+import pygame
 from setup import *
 
 
@@ -9,8 +10,17 @@ class Dino:
         self.frame = 0
         self.img_duration = img_duration
         self.velocity = [0, 0]
+    
+    def rect(self):
+        return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
-    def update(self):
+    def update(self, obstacles):
+        
+        dino_rect = self.rect()
+        for cactus in obstacles:
+            if dino_rect.colliderect(cactus.rect()):
+                self.game.playing = False
+        
         self.frame = (self.frame + 1)
         if self.frame >= len(self.game.assets['dino']) * self.img_duration:
             self.frame = 0

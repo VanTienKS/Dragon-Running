@@ -16,6 +16,7 @@ class Game:
         pygame.display.set_caption("Dragon Running")
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
+        self.playing = True
         self.assets = {
             'bg': load_image('bg1.png'),
             'cactus': load_image('cactus.png'),
@@ -45,26 +46,29 @@ class Game:
                         self.dino.velocity[1] = -13
                     if event.key == pygame.K_DOWN:
                         self.dino.velocity[1] = 9999999
+                    if event.key == pygame.K_r:
+                        self.playing = True
 
-            if random.random() * 5000 < 50:
-                self.obstacles.append(
-                    Cactus(self, (WIDTH, HEIGHT - HEIGHT / 3 - 20), (70, 130)))
+            if (self.playing):
+                if random.random() * 5000 < 50:
+                    self.obstacles.append(
+                        Cactus(self, (WIDTH, HEIGHT - HEIGHT / 3 - 20), (70, 130)))
 
-            for bg in self.bg:
-                bg.update()
-                bg.render(self.screen)
+                for bg in self.bg:
+                    bg.update()
+                    bg.render(self.screen)
 
-            self.dino.update()
-            self.dino.render(self.screen)
+                self.dino.update(self.obstacles)
+                self.dino.render(self.screen)
 
-            for cactus in self.obstacles:
-                if cactus.pos[0] < -WIDTH:
-                    self.obstacles.remove(cactus)
-                cactus.update()
-                cactus.render(self.screen)
+                for cactus in self.obstacles:
+                    if cactus.pos[0] < -WIDTH:
+                        self.obstacles.remove(cactus)
+                    cactus.update()
+                    cactus.render(self.screen)
 
-            self.clock.tick(FPS)
-            pygame.display.update()
+                self.clock.tick(FPS)
+                pygame.display.update()
 
 
 game = Game()
